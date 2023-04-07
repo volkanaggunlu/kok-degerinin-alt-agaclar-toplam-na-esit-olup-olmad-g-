@@ -15,3 +15,5 @@ Bu şekilde, algoritma bir ikili ağaç yapısında dolaşarak, her düğümün 
 
 Bu algoritmanın amacıysa, verilen bir kök düğümün alt ağaçlarının değerlerinin toplamının, kök düğümün değerine eşit olup olmadığını kontrol etmektir.
  Bunu da ikili ağacı ve içindeki kök ve alt dalların değerlerini kontrol ederek yapar.
+
+Kod Dev c++ üzerinden çalışan bir C programlama dili kodudur. derleyip çalıştırmanız kodun çalışması için yeterlidir.
