@@ -1,55 +1,62 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// İkili ağaç yapısı bu şekilde oluşturuldu.
+// Ä°kili aÄŸaÃ§ yapÄ±sÄ± bu ÅŸekilde oluÅŸturuldu.
 struct agac {
-    int dal_toplam; //sağ ve sol daldaki sayıların toplamı için kullanılacak olan int verisi.
+    int dal_toplam; //saÄŸ ve sol daldaki sayÄ±larÄ±n toplamÄ± iÃ§in kullanÄ±lacak olan int verisi.
     struct agac* sol_dal;
-    struct agac* sag_dal;
+    struct agac* sag_dal; // sol ve saÄŸ dal iÃ§in pointerlar.
 };
 
-// Yeni bir düğüm oluşturur ve geri döndürür
+// Yeni bir dÃ¼ÄŸÃ¼m oluÅŸturur ve geri dÃ¶ndÃ¼rÃ¼r
 struct agac* ikinci_agac(int dal_toplam) {
-    struct agac* agac = (struct agac*) malloc(sizeof(struct agac));
+    struct agac* agac = (struct agac*) malloc(sizeof(struct agac));// agac adlÄ± struct yapÄ±sÄ±ndaki verilerin alanÄ± kadar alan aÃ§mak iÃ§in malloc fonksiyonu kullanÄ±lÄ±r.
     agac->dal_toplam = dal_toplam;
-    agac->sol_dal = NULL;
-    agac->sag_dal = NULL;
+    agac->sol_dal = NULL; // sol dÃ¼ÄŸÃ¼m null atanÄ±r.
+    agac->sag_dal = NULL; // saÄŸ dÃ¼ÄŸÃ¼m null atanÄ±r.
     return(agac);
 }
 
-// Kök değerinin alt düğümlerin toplamı olup olmadığını kontrol eden fonksiyon
+// KÃ¶k deÄŸerinin alt dÃ¼ÄŸÃ¼mlerin toplamÄ± olup olmadÄ±ÄŸÄ±nÄ± kontrol eden fonksiyon
 int toplam_degerine_esit_mi(struct agac* root) {
-    // Kök düğüm null ise, alt düğüm yoktur ve koşul doğrudur
+    // KÃ¶k dÃ¼ÄŸÃ¼m null ise, alt dÃ¼ÄŸÃ¼m yoktur ve koÅŸul doÄŸrudur
     if (root == NULL)
-        return 1;
+        return 1; // root deÄŸeri null olursa altÄ±ndaki aÄŸaÃ§lardaki deÄŸerlerde 0 olur. Null deÄŸeri de 0 olduÄŸundan 0+0=0 olacaktÄ±r ve sonuÃ§ doÄŸru olacaktÄ±r.
     
-    // Kökün sol ve sağ alt düğümlerinin toplamını hesapla
-    int sol_sayi = 0;
+    // KÃ¶kÃ¼n sol ve saÄŸ alt dÃ¼ÄŸÃ¼mlerinin toplamÄ±nÄ± hesapla
+        int sol_sayi = 0;
 	int sag_sayi = 0;
-    if (root->sol_dal != NULL)
+    if (root->sol_dal != NULL)// burada kÃ¶k nulldan farklÄ± bir deÄŸer olduÄŸunda hemen altÄ±ndaki satÄ±rdaki kodlar Ã§alÄ±ÅŸÄ±r
         sol_sayi = root->sol_dal->dal_toplam;
-    if (root->sag_dal != NULL)
+    if (root->sag_dal != NULL)// burada kÃ¶k nulldan farklÄ± bir deÄŸer olduÄŸunda hemen altÄ±ndaki satÄ±rda kodlar Ã§alÄ±ÅŸacaktÄ±r.
         sag_sayi = root->sag_dal->dal_toplam;
     
-    // Sol ve sağ alt ağaçların toplamı ile kök değerini karşılaştır
-    if (root->dal_toplam == sol_sayi + sag_sayi)
-        return 1;
+ 
+    if (root->dal_toplam == sol_sayi + sag_sayi) // Sol ve saÄŸ alt aÄŸaÃ§larÄ±n toplamÄ± ile kÃ¶k deÄŸerini karÅŸÄ±laÅŸtÄ±r
+        return 1; 	
     else
-        return 0;
+        return 0;	// bu koÅŸul kontrolde sonuÃ§ doÄŸruysa 1 , deÄŸilse 0 olur.
 }
 
-// Test işlevi
+// Test iÅŸlevi
 int main() {
-    struct agac* root = ikinci_agac(100);//kök için değer 100
-    root->sol_dal = ikinci_agac(77);// sol dal için değer 77
-    root->sag_dal = ikinci_agac(23);// sağ dal için değer 23
-
-    int result = toplam_degerine_esit_mi(root);//Fonksiyon çalıştırılır ve kök değeri dalların toplamı olduğu için sonuç (result 1 ve doğru olacaktır.)
+    struct agac* root = ikinci_agac(100);//kÃ¶k iÃ§in deÄŸer 100
+    root->sol_dal = ikinci_agac(77);// sol dal iÃ§in deÄŸer 77
+    root->sag_dal = ikinci_agac(23);// saÄŸ dal iÃ§in deÄŸer 23
+	
+	/*
+		100
+	       /   \				 ÃœÃ‡ ELEMANLI Ä°KÄ°LÄ° AÄACIN GÃ–RÃœNTÃœSÃœ ÅEKÄ°LDEKÄ° GÄ°BÄ°DÄ°R.
+	     77     23
+	
+	
+	*/
+    int result = toplam_degerine_esit_mi(root);//Fonksiyon Ã§alÄ±ÅŸtÄ±rÄ±lÄ±r ve kÃ¶k deÄŸeri dallarÄ±n toplamÄ± olduÄŸu iÃ§in sonuÃ§ (result 1 ve doÄŸru olacaktÄ±r.) (77+23=100)
     if (result == 1)
-        printf("sol ve sag alt agaclarin toplamı kok degerine esittir.");
+        printf("sol ve sag alt agaclarin toplamÄ± kok degerine esittir.");
     else
-        printf("sol ve sag alt agaçlarin toplami kok degerine esit degildir.");
-
+        printf("sol ve sag alt agaÃ§larin toplami kok degerine esit degildir.");
+ // koÅŸul kontrole gÃ¶re Ã¼stteki iki printf mesajÄ±ndan birisi ekrana yazÄ±rÄ±lacaktÄ±r.
     return 0;
 }
 
